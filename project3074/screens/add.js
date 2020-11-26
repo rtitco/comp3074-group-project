@@ -27,14 +27,14 @@ const reviewSchema = yup.object({
         .max(160, 'Maximum 80 characters'),
     tags: yup.string()
         .required('Must enter at least 1 tag'),
-    rating: yup.string()
+    rating: yup.number()
         .required('Please enter a rating between 1-5')
-        // .positive('Rating must be between 1-5')
-        // .min(1, 'Rating must be between 1-5')
-        // .max(5, 'Rating must be between 1-5')
-        .test('is-num-1-5', 'Rating must be between 1-5', (value) => {
-            return parseInt(value) < 6 && parseInt(value) > 0;
-        }),
+        .positive('Rating must be between 1-5')
+        .min(1, 'Rating must be between 1-5')
+        .max(5, 'Rating must be between 1-5')
+        // .test('is-num-1-5', 'Rating must be between 1-5', (value) => {
+        //     return parseInt(value) < 6 && parseInt(value) > 0;
+        // }),
 })
 
 const storeData = async (input) => {
@@ -133,7 +133,7 @@ export default function AddRestaurant({navigation}) {
                                     keyboardType="phone-pad"
                                     style={styles.textView}
                                     onChangeText={props.handleChange('phone')}
-                                    value={props.values.phone}
+                                    value={props.values.phone.toString()}
                                 />
                                 <Text style={styles.errors}>{ props.errors.phone }</Text>
 
@@ -158,10 +158,10 @@ export default function AddRestaurant({navigation}) {
                                 <Text>Rating:</Text>
                                 <TextInput
                                     placeholder="Rating (1-5)"
-                                    keyboardType="phone-pad"
+                                    keyboardType="numeric"
                                     style={styles.textView}
                                     onChangeText={props.handleChange('rating')}
-                                    value={props.values.rating}
+                                    value={props.values.rating.toString()}
                                 />
                                 <Text style={styles.errors}>{ props.errors.rating }</Text>
 
