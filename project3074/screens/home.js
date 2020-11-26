@@ -18,32 +18,36 @@ const getData = async () => {
 
 export default function Home({ navigation, route }){
   const [reviews, setReviews] = useState([]);
-  const [arrayholder,setArrayholder] =useState([])
-  const [query, setQuery] = useState('')
+  const [arrayholder,setArrayholder] = useState([]);
+  const [query, setQuery] = useState('') 
 
-  let myRestaurants = [];
-  getData().then(async (e) => {
-    myRestaurants = e;
-    setReviews(e)
-  });
+  // const oldSearchData = (query) =>  {
+  //   const newData = reviews.filter(item => {
+  //     const itemData = item.name.toLowerCase();
+  //     const textData = query.toLowerCase();
+  //     return itemData.indexOf(textData) > -1
+  //   });
+  //     setQuery(query)
+  //     setArrayholder(newData)
+  //   }
 
-  const addReview = (review) => {
-    //removing random num generator - using count as key(will be a problem in delete functions)
-    // review.key = Math.random().toString();
-    setReviews((currentReviews) => {
-      return [review, ...currentReviews];
+  const searchData = (query) => {
+    getData().then((e) => {
+      setReviews(e);
+
+      const newData = e.filter(item => {
+        const itemData = item.name.toLowerCase();
+        const textData = query.toLowerCase();
+        return itemData.indexOf(textData) > -1
+      });
+      setQuery(query)
+      setArrayholder(newData)
     });
   }
 
-  const searchData = (query) =>  {
-    const newData = reviews.filter(item => {
-      const itemData = item.name.toLowerCase();
-      const textData = query.toLowerCase();
-      return itemData.indexOf(textData) > -1
-    });
-      setQuery(query)
-      setArrayholder(newData)
-    }
+  useEffect( () => {
+    searchData("")
+  }, [])
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -73,7 +77,7 @@ export default function Home({ navigation, route }){
             type='custom'
             imageSize={20}
             ratingColor="#E54B4B"
-            startingValue={item.rating}
+            startingValue={item.rating.toString()}
             /> 
           </View>
           <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between'}}>

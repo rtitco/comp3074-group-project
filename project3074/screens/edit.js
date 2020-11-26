@@ -15,7 +15,7 @@ export default function EditRestaurant({  route, navigation }){
                 initialValues={{ name: '', address: '', phone: '', desc: '', tags: '', rating: 0 }}
                 onSubmit={(values) => {
                     //validation logic - if valid storedata(values)
-                    storeData(values)
+                    storeData(values);
                     // clearAll();
                 }}
             >
