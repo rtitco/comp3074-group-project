@@ -63,7 +63,7 @@ export default function EditRestaurant({  route, navigation }){
                         readonly
                         type='custom'
                         ratingColor="#E54B4B"
-                        startingValue={rating}
+                        startingValue={parseInt(rating)}
                         style={{ paddingVertical: 10 }}
                         /> 
                     <Text></Text>

@@ -46,7 +46,7 @@ export default function Home({ navigation, route }){
   }
 
   useEffect( () => {
-    searchData("")
+    searchData('')
   }, [])
 
   return (
@@ -66,7 +66,7 @@ export default function Home({ navigation, route }){
       </View>
       <FlatList
       data={arrayholder}
-      keyExtractor={({ key }, index) => key}
+      keyExtractor={({ key }, index) => key.toString()}
       renderItem={({ item }) => (
         <TouchableOpacity onPress={() => navigation.navigate('Edit', item)}>
         <Card >
@@ -77,7 +77,7 @@ export default function Home({ navigation, route }){
             type='custom'
             imageSize={20}
             ratingColor="#E54B4B"
-            startingValue={item.rating.toString()}
+            startingValue={parseInt(item.rating)}
             /> 
           </View>
           <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between'}}>
