@@ -46,7 +46,7 @@ const storeData = async (input) => {
             myRestaurants = e;
         }
         else {
-            myRestaurants = []; a
+            myRestaurants = [];
         }
         count = myRestaurants.length;
         for (let i = 0; i < count; i++) {
