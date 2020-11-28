@@ -108,7 +108,7 @@ export default function AddRestaurant({ navigation }) {
                         storeData(values).then(
                             setTimeout(() => {
                                 (navigation.navigate('Home'))
-                            }, 1000)
+                            }, 2000)
                         );
                         // clearAll();
                     }}

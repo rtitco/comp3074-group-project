@@ -1,11 +1,16 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { readDir } from 'react-native-fs';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 export default function Card(props) {
   return (
-    <View style={styles.card}>
-      <View style={styles.cardContent}>
-        { props.children }
+    <View style={{flexDirection: 'row' }}>
+      <View style={styles.card}>
+        <View style={styles.cardContent}>
+          { props.children }
+        </View>
       </View>
     </View>
   );
@@ -22,7 +27,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     marginHorizontal: 4,
     marginVertical: 6,
-    width:400
+    width:380
   },
   cardContent: {
     marginHorizontal: 18,
