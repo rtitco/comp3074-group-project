@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
 import { useLinkProps, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
@@ -48,15 +48,15 @@ const updateData = async (input) => {
         // console.log(input);
         let myRestaurants = e;
         // console.log(myRestaurants);
-        for (i = 0; i < myRestaurants.length; i ++){
-            if(myRestaurants[i].key === input.key){
+        for (i = 0; i < myRestaurants.length; i++) {
+            if (myRestaurants[i].key === input.key) {
                 myRestaurants[i] = input;
                 const jsonValue = JSON.stringify(myRestaurants);
                 await AsyncStorage.setItem('restaurants_key', jsonValue);
                 console.log("update complete")
             }
         }
-        console.log("update failed")
+        // console.log("update failed")
     })
 }
 
@@ -68,12 +68,17 @@ export default function EditRestaurant({ route, navigation }) {
             <View style={styles.container}>
                 <Text style={styles.header}>{name}</Text>
                 <Formik
-                    initialValues={{ name: name, address: address, phone: phone, desc: desc, tags: tags, rating: rating}}
-                    onSubmit={(values, actions) => {
+                    initialValues={{ name: name, address: address, phone: phone, desc: desc, tags: tags, rating: rating }}
+                    onSubmit={(values) => {
                         values.key = key;
-                        updateData(values);
-                        actions.resetForm();
-                        navigation.navigate('Home');
+                        updateData(values).then(
+                            setTimeout(() => {
+                                (navigation.navigate('Home'))
+                            }, 1000)
+                        )
+                        // actions.resetForm();
+                        // navigation.navigate('Home', {updatedName:values.name});
+                        
                     }}
                 >
                     {(props) => (
