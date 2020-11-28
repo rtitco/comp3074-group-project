@@ -1,12 +1,11 @@
 import * as React from 'react';
-import Home from './screens/home.js';
-import About from './screens/about.js';
-import AddRestaurant from './screens/add.js';
 import EditRestaurant from './screens/edit.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+import {HomeScreenNavigator, AddScreenNavigator, AboutScreenNavigator} from './custom-navigation.js'
 
 const Tab = createBottomTabNavigator();
 const restaurants = []
@@ -23,6 +22,15 @@ const MyTheme = {
   },
 };
 
+const editStack = createStackNavigator();
+
+function editStackScreen() {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Edit" component={EditRestaurant} />
+    </SettingsStack.Navigator>
+  );
+}
 
 function MyTabs() {
   return (
@@ -39,7 +47,7 @@ function MyTabs() {
    }}>
       <Tab.Screen
         name="Add"
-        component={AddRestaurant}
+        component={AddScreenNavigator}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
@@ -47,19 +55,10 @@ function MyTabs() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Edit"
-        component={EditRestaurant}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name={"edit"} size={25} color="#F9F9F9" />
-          ),
-        }}
-      />
+      
     <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeScreenNavigator}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
@@ -70,7 +69,7 @@ function MyTabs() {
      
      <Tab.Screen
         name="About"
-        component={About}
+        component={AboutScreenNavigator}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
