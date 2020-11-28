@@ -14,7 +14,7 @@ const reviewSchema = yup.object({
     name: yup.string()
         .typeError('Invalid Name')
         .required('Restaurant Name is required')
-        .min(4), 
+        .min(4),
     address: yup.string()
         .required('Restaurant Address is required')
         .matches(addressregex, 'Example format - 123 Example St'),
@@ -32,15 +32,19 @@ const reviewSchema = yup.object({
         .positive('Rating must be between 1-5')
         .min(1, 'Rating must be between 1-5')
         .max(5, 'Rating must be between 1-5')
-        // .test('is-num-1-5', 'Rating must be between 1-5', (value) => {
-        //     return parseInt(value) < 6 && parseInt(value) > 0;
-        // }),
+    // .test('is-num-1-5', 'Rating must be between 1-5', (value) => {
+    //     return parseInt(value) < 6 && parseInt(value) > 0;
+    // }),
 })
 
+const getRandomInt = () => {
+    return Math.floor(Math.random() * Math.floor(99999999999));
+  }
+  
 const storeData = async (input) => {
     let found = false;
     let myRestaurants;
-    let count = 0;
+    let myId = getRandomInt();
     getData().then(async (e) => {
         if (e != null) {
             myRestaurants = e;
@@ -48,8 +52,7 @@ const storeData = async (input) => {
         else {
             myRestaurants = [];
         }
-        count = myRestaurants.length;
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < myRestaurants.length; i++) {
             if (input.phone == myRestaurants[i].phone) {
                 found = true
                 break;
@@ -57,7 +60,7 @@ const storeData = async (input) => {
         }
         if (found != true) {
             try {
-                input.key = count
+                input.key = myId
                 myRestaurants.push(input)
                 const jsonValue = JSON.stringify(myRestaurants)
                 await AsyncStorage.setItem('restaurants_key', jsonValue)
@@ -78,18 +81,20 @@ const getData = async () => {
     }
 }
 
-const clearAll = async () => {
-    try {
-        count = 0;
-        await AsyncStorage.clear()
-    } catch (e) {
-        // clear error
-    }
+// const clearAll = async () => {
+//     try {
+//         myId = 0;
+//         await AsyncStorage.clear()
+//     } catch (e) {
+//         // clear error
+//     }
 
-    console.log('Done.')
-}
+//     console.log('Done.')
+// }
 
-export default function AddRestaurant({navigation}) {
+
+
+export default function AddRestaurant({ navigation }) {
     return (
         <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
 
@@ -100,8 +105,11 @@ export default function AddRestaurant({navigation}) {
                     validationSchema={reviewSchema}
                     onSubmit={(values, actions) => {
                         actions.resetForm();
-                        storeData(values);
-                        navigation.navigate('Home');
+                        storeData(values).then(
+                            setTimeout(() => {
+                                (navigation.navigate('Home'))
+                            }, 1000)
+                        );
                         // clearAll();
                     }}
                 >
@@ -116,7 +124,7 @@ export default function AddRestaurant({navigation}) {
                                     onChangeText={props.handleChange('name')}
                                     value={props.values.name}
                                 />
-                                <Text style={styles.errors}>{ props.errors.name }</Text>
+                                <Text style={styles.errors}>{props.errors.name}</Text>
 
                                 <Text>Address:</Text>
                                 <TextInput
@@ -125,7 +133,7 @@ export default function AddRestaurant({navigation}) {
                                     onChangeText={props.handleChange('address')}
                                     value={props.values.address}
                                 />
-                                <Text style={styles.errors}>{ props.errors.address }</Text>
+                                <Text style={styles.errors}>{props.errors.address}</Text>
 
                                 <Text>Phone Number:</Text>
                                 <TextInput
@@ -135,7 +143,7 @@ export default function AddRestaurant({navigation}) {
                                     onChangeText={props.handleChange('phone')}
                                     value={props.values.phone.toString()}
                                 />
-                                <Text style={styles.errors}>{ props.errors.phone }</Text>
+                                <Text style={styles.errors}>{props.errors.phone}</Text>
 
                                 <Text>Description:</Text>
                                 <TextInput
@@ -144,7 +152,7 @@ export default function AddRestaurant({navigation}) {
                                     onChangeText={props.handleChange('desc')}
                                     value={props.values.desc}
                                 />
-                                <Text style={styles.errors}>{ props.errors.desc }</Text>
+                                <Text style={styles.errors}>{props.errors.desc}</Text>
 
                                 <Text>Tags:</Text>
                                 <TextInput
@@ -153,7 +161,7 @@ export default function AddRestaurant({navigation}) {
                                     onChangeText={props.handleChange('tags')}
                                     value={props.values.tags}
                                 />
-                                <Text style={styles.errors}>{ props.errors.tags }</Text>
+                                <Text style={styles.errors}>{props.errors.tags}</Text>
 
                                 <Text>Rating:</Text>
                                 <TextInput
@@ -163,7 +171,7 @@ export default function AddRestaurant({navigation}) {
                                     onChangeText={props.handleChange('rating')}
                                     value={props.values.rating.toString()}
                                 />
-                                <Text style={styles.errors}>{ props.errors.rating }</Text>
+                                <Text style={styles.errors}>{props.errors.rating}</Text>
 
                                 {/* <Rating
                     showRating
