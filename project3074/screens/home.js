@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView, TextInput, Button } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useIsFocused, useFocusEffect } from '@react-navigation/native';
 import AddForm from './add.js'
 import Card from '../shared/card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Rating } from 'react-native-ratings';
-import filter from 'lodash.filter';
 
 const getData = async () => {
   try {
@@ -31,6 +30,14 @@ export default function Home({ navigation, route }){
   //     setArrayholder(newData)
   //   }
 
+  // const isFocused = useIsFocused()
+
+    // useEffect(() => {
+    //     setArrayholder(reviews);
+    //     console.log("test")
+    // } , [isFocused])
+
+
   const searchData = (query) => {
     getData().then((e) => {
       setReviews(e);
@@ -49,6 +56,7 @@ export default function Home({ navigation, route }){
     searchData('')
   }, [])
 
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <View style={{flexDirection: 'row' }}>
@@ -58,17 +66,12 @@ export default function Home({ navigation, route }){
           onChangeText={(query) => searchData(query)}
           value={query}
       />
-       <Button
-          style={{}}                     
-          title="Search"
-          color="#1E1E24"
-      />
       </View>
       <FlatList
       data={arrayholder}
       keyExtractor={({ key }, index) => key.toString()}
       renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('Edit', item)}>
+        <TouchableOpacity onPress={() => navigation.navigate('Edit Restaurant Review', item)}>
         <Card >
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.header} >{ item.name }</Text>
