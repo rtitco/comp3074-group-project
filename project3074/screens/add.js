@@ -32,15 +32,12 @@ const reviewSchema = yup.object({
         .positive('Rating must be between 1-5')
         .min(1, 'Rating must be between 1-5')
         .max(5, 'Rating must be between 1-5')
-    // .test('is-num-1-5', 'Rating must be between 1-5', (value) => {
-    //     return parseInt(value) < 6 && parseInt(value) > 0;
-    // }),
 })
 
 const getRandomInt = () => {
     return Math.floor(Math.random() * Math.floor(99999999999));
-  }
-  
+}
+
 const storeData = async (input) => {
     let found = false;
     let myRestaurants;
@@ -78,6 +75,7 @@ const getData = async () => {
         return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch (e) {
         // error reading value
+        return ['Empty']
     }
 }
 
@@ -92,8 +90,6 @@ const getData = async () => {
 //     console.log('Done.')
 // }
 
-
-
 export default function AddRestaurant({ navigation }) {
     return (
         <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
@@ -101,19 +97,20 @@ export default function AddRestaurant({ navigation }) {
             <View style={styles.container}>
                 <Text style={styles.header}>Add Restaurant</Text>
                 <Formik
-                    initialValues={{ name: '', address: '', phone: '', desc: '', tags: '', rating: 0 }}
+                    initialValues={{ name: '', address: '', phone: '', desc: '', tags: '', rating: '' }}
                     validationSchema={reviewSchema}
                     onSubmit={(values, actions) => {
-                        actions.resetForm();
-                        storeData(values).then(
+                        storeData(values).then(() => {
                             setTimeout(() => {
-                                (navigation.navigate('Home'))
-                            }, 2000)
-                        );
+                                navigation.navigate('Home')
+                            }, 100)
+                        })
+                            .finally(() => {
+                                actions.resetForm();
+                            });
                         // clearAll();
                     }}
                 >
-
                     {(props) => (
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                             <View>
