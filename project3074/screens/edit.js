@@ -8,7 +8,6 @@ import * as yup from 'yup';
 
 const phoneregex = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const addressregex = /^(\d+) ?([A-Za-z](?= ))? (.*?)?$/
-const ratingregex = /^([1-5])$/
 
 const reviewSchema = yup.object({
     name: yup.string()
@@ -73,12 +72,12 @@ export default function EditRestaurant({ route, navigation }) {
                         values.key = key;
                         updateData(values).then(
                             setTimeout(() => {
-                                (navigation.navigate('Home'))
+                                (navigation.replace('Home'))
                             }, 1000)
                         )
                         // actions.resetForm();
                         // navigation.navigate('Home', {updatedName:values.name});
-                        
+
                     }}
                 >
                     {(props) => (
