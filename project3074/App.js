@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import EditRestaurant from './screens/edit.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import SplashScreen from 'react-native-splash-screen'
 import {HomeScreenNavigator, AddScreenNavigator, AboutScreenNavigator} from './custom-navigation.js'
+import { ImageBackground } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const restaurants = []
@@ -22,19 +23,10 @@ const MyTheme = {
   },
 };
 
-const editStack = createStackNavigator();
-
-function editStackScreen() {
-  return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Edit" component={EditRestaurant} />
-    </SettingsStack.Navigator>
-  );
-}
-
 function MyTabs() {
   return (
     <Tab.Navigator
+    initialRouteName="Home"
     tabBarOptions={{
       activeTintColor: '#fff',
       inactiveTintColor: '#f0f0f0',
@@ -83,6 +75,9 @@ function MyTabs() {
 
 
 export default function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
   return (
     <NavigationContainer>
       <MyTabs />
