@@ -25,13 +25,19 @@ export default function Home({ navigation, route }) {
     getData().then((e) => {
       setReviews(e);
 
-      const newData = e.filter(item => {
-        const itemData = item.name.toLowerCase();
-        const textData = query.toLowerCase();
-        return itemData.indexOf(textData) > -1
-      });
+      const tagResults = e.filter(item => {
+        const tagList = item.tags.split(',');
+        const nameData = item.name.toLowerCase();
+        const tagQuery = query.toLowerCase();
+        for(let i=0; i < tagList.length; i++){
+           tagList[i].toLowerCase();
+          if (tagList[i].indexOf(tagQuery) > -1 || nameData.indexOf(tagQuery) > -1 ){
+            return tagList[i].indexOf(tagQuery) > -1 || nameData.indexOf(tagQuery) > -1 
+          }
+        }
+      })
       setQuery(query)
-      setArrayholder(newData)
+      setArrayholder(tagResults);
     });
   }
 
@@ -71,6 +77,18 @@ export default function Home({ navigation, route }) {
     }
     return null
   }
+
+  const formatTags = (tagString) => {
+    var tagsArray = tagString.split(',')
+    var textLoop = [];
+    for(let i = 0; i<tagsArray.length; i++){
+      textLoop.push({'text': tagsArray[i]})
+    }
+    //return <Text style={styles.textTag}>textLoop</Text>;
+     return textLoop.map((item, index) => <Text style={styles.textTag} key={index}>{item.text}</Text>);
+  }
+
+
 
   return (
     <View style={styles.pageContainer}>
@@ -118,7 +136,10 @@ export default function Home({ navigation, route }) {
 
                 <View style={styles.cardLines}>
                   <Text style={styles.textDescription}>"{item.desc}"</Text>
-                  <Text style={styles.textTag}>{item.tags}</Text>
+                </View>
+
+                <View style={styles.cardLines}>
+                  {formatTags(item.tags)}
                 </View>
 
               </Card>
@@ -151,8 +172,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#E54B4B",
     color: "white",
     paddingHorizontal: 8,
+    marginTop:5,
     borderColor: "#E54B4B",
-    borderRadius: 10,
+    borderRadius: 10
   },
   pageContainer: {
     display: 'flex',
@@ -178,11 +200,13 @@ const styles = StyleSheet.create({
 
   cardLeft: {
     flexGrow: 9,
-    margin: '1%'
+    margin: '1%',
+    width:'90%'
   },
   cardRight: {
     flexGrow: 1,
-    margin: '1%'
+    margin: '1%',
+    width: '10%'
   },
 
   cardDelete: {
@@ -197,6 +221,7 @@ const styles = StyleSheet.create({
   {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap'
   },
 
 });
