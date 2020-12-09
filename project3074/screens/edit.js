@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
+import { Share, View, Text, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
 import { useLinkProps, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { Rating } from 'react-native-ratings';
@@ -66,11 +66,32 @@ const updateData = async (input) => {
     })
 }
 
+
+
 export default function EditRestaurant({ route, navigation }) {
     const { name, address, city, country, phone, desc, tags, rating, key } = route.params;
     const openInMaps = () => {
         openMap({ query: address + ", " + city + ", " + country});
     }
+    const onShare = (name, address, city, country, rating, desc) => {
+          const result = Share.share({
+            message:
+              "Checkout this restaurant I reviewed!!!!\n"
+              + "\n\nRestaurant Name:\n" + name
+              + "\n\nDescription:\n " + desc
+              + "\n\nLocation:\n " + address + ", " + city + ", " + country 
+              + "\n\nRating:\n " + rating + "/5"
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+      };
     return (
         <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
 
@@ -178,11 +199,17 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text></Text>
                             <Button
-                                onPress={props.handleSubmit}
+                                onPress={() => onShare(props.values.name, 
+                                    props.values.address, 
+                                    props.values.city,
+                                    props.values.country,
+                                    props.values.rating, 
+                                    props.values.desc)}
                                 title="Share"
-                                style={styles.btnShare}
+                                style={styles.btnSubmit}
                                 color="#1E1E24"
                             />
+                            <Text></Text>
                             <Button
                                 onPress={openInMaps}
                                 title="Google Maps"

@@ -13,6 +13,13 @@ const HomeScreenNavigator = () => {
             <Stack.Screen 
                 name="Home"
                 component={Home}
+                options={{
+                    title: 'Restaurant List',
+                    headerStyle: {
+                      backgroundColor: '#E54B4B',
+                    },
+                    headerTintColor: '#fff',
+                }}
             />
             <Stack.Screen
                 name="Edit Restaurant Review"
@@ -29,6 +36,13 @@ const AddScreenNavigator = () => {
             <Stack.Screen 
                 name="Add Restaurant Review"
                 component={AddRestaurant}
+                options={{
+                    title: 'Add Restaurant Review',
+                    headerStyle: {
+                      backgroundColor: '#E54B4B',
+                    },
+                    headerTintColor: '#fff',
+                }}
             />
         </Stack.Navigator>
     )
@@ -41,6 +55,13 @@ const AboutScreenNavigator = () => {
             <Stack.Screen 
                 name="About Us"
                 component={About}
+                options={{
+                    title: 'About Us',
+                    headerStyle: {
+                      backgroundColor: '#E54B4B',
+                    },
+                    headerTintColor: '#fff',
+                }}
             />
         </Stack.Navigator>
     )
