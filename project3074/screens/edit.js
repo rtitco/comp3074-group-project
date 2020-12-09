@@ -110,6 +110,24 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.address}</Text>
 
+                            <Text>City:</Text>
+                                <TextInput
+                                    placeholder="Toronto"
+                                    style={styles.textView}
+                                    onChangeText={props.handleChange('city')}
+                                    value={props.values.city}
+                                />
+                                <Text style={styles.errors}>{props.errors.city}</Text>
+
+                                <Text>Country:</Text>
+                                <TextInput
+                                    placeholder="Canada"
+                                    style={styles.textView}
+                                    onChangeText={props.handleChange('country')}
+                                    value={props.values.country}
+                                />
+                                <Text style={styles.errors}>{props.errors.country}</Text>
+
                             <Text>Phone Number:</Text>
                             <TextInput
                                 keyboardType="phone-pad"
