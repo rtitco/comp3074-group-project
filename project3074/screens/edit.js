@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as yup from 'yup';
 import openMap from 'react-native-open-maps';
 
-const phoneregex = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const phoneregex = /^[1-9]{10}$/
 const addressregex = /^(\d+) ?([A-Za-z](?= ))? (.*?)?$/
 
 const reviewSchema = yup.object({

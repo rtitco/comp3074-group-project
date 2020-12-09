@@ -6,7 +6,7 @@ import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as yup from 'yup';
 
-const phoneregex = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const phoneregex = /^[1-9]{10}$/
 const addressregex = /^(\d+) ?([A-Za-z](?= ))? (.*?)?$/
 const ratingregex = /^([1-5])$/
 
