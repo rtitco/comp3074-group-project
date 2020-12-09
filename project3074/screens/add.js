@@ -18,6 +18,12 @@ const reviewSchema = yup.object({
     address: yup.string()
         .required('Restaurant Address is required')
         .matches(addressregex, 'Example format - 123 Example St'),
+    city: yup.string()
+        .required('City is required')
+        .min(4),
+    country: yup.string()
+        .required('Country is required')
+        .min(4),
     phone: yup.string()
         .required('Phone Number is required')
         .matches(phoneregex, 'Phone Number is not valid'),
@@ -97,7 +103,7 @@ export default function AddRestaurant({ navigation }) {
             <View style={styles.container}>
                 <Text style={styles.header}>Add Restaurant</Text>
                 <Formik
-                    initialValues={{ name: '', address: '', phone: '', desc: '', tags: '', rating: '' }}
+                    initialValues={{ name: '', address: '', city: '', country: '', phone: '', desc: '', tags: '', rating: '' }}
                     validationSchema={reviewSchema}
                     onSubmit={(values, actions) => {
                         storeData(values).then(() => {
@@ -131,6 +137,24 @@ export default function AddRestaurant({ navigation }) {
                                     value={props.values.address}
                                 />
                                 <Text style={styles.errors}>{props.errors.address}</Text>
+
+                                <Text>City:</Text>
+                                <TextInput
+                                    placeholder="Toronto"
+                                    style={styles.textView}
+                                    onChangeText={props.handleChange('city')}
+                                    value={props.values.city}
+                                />
+                                <Text style={styles.errors}>{props.errors.city}</Text>
+
+                                <Text>Country:</Text>
+                                <TextInput
+                                    placeholder="Canada"
+                                    style={styles.textView}
+                                    onChangeText={props.handleChange('country')}
+                                    value={props.values.country}
+                                />
+                                <Text style={styles.errors}>{props.errors.country}</Text>
 
                                 <Text>Phone Number:</Text>
                                 <TextInput
@@ -169,15 +193,6 @@ export default function AddRestaurant({ navigation }) {
                                     value={props.values.rating.toString()}
                                 />
                                 <Text style={styles.errors}>{props.errors.rating}</Text>
-
-                                {/* <Rating
-                    showRating
-                    type='custom'
-                    ratingColor="#E54B4B"
-                    onFinishRating={props.handleChange('rating')}
-                    style={{ paddingVertical: 10 }}
-                    value={props.values.tags}
-                    /> */}
                                 <Text></Text>
                                 <Button
                                     onPress={props.handleSubmit}

@@ -66,7 +66,7 @@ export default function Home({ navigation, route }) {
 
   return (
     <View style={styles.pageContainer}>
-      
+
       <View style={styles.searchBar}>
         <TextInput
           placeholder="Search by Name or Tag"
@@ -100,6 +100,10 @@ export default function Home({ navigation, route }) {
                 <View style={styles.cardLines}>
                   <Text>{item.address}</Text>
                   <Text>+{item.phone}</Text>
+                </View>
+
+                <View style={styles.cardLines}>
+                  <Text>{item.city}, {item.country}</Text>
                 </View>
 
                 <View style={styles.cardLines}>
@@ -140,10 +144,10 @@ const styles = StyleSheet.create({
     borderColor: "#E54B4B",
     borderRadius: 10,
   },
-  pageContainer: { 
+  pageContainer: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     backgroundColor: "#f7ebe8"
   },
   searchBar: {
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     margin: '1%'
   },
-  
+
   cardDelete: {
     borderRadius: 8,
     backgroundColor: '#E54B4B',

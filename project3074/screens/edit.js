@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as yup from 'yup';
+import openMap from 'react-native-open-maps';
 
 const phoneregex = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const addressregex = /^(\d+) ?([A-Za-z](?= ))? (.*?)?$/
@@ -17,6 +18,12 @@ const reviewSchema = yup.object({
     address: yup.string()
         .required('Restaurant Address is required')
         .matches(addressregex, 'Example format - 123 Example St'),
+    city: yup.string()
+        .required('City is required')
+        .min(4),
+    country: yup.string()
+        .required('Country is required')
+        .min(4),
     phone: yup.string()
         .required('Phone Number is required')
         .matches(phoneregex, 'Phone Number is not valid'),
@@ -60,14 +67,18 @@ const updateData = async (input) => {
 }
 
 export default function EditRestaurant({ route, navigation }) {
-    const { name, address, phone, desc, tags, rating, key } = route.params;
+    const { name, address, city, country, phone, desc, tags, rating, key } = route.params;
+    const openInMaps = () => {
+        openMap({ query: address + ", " + city + ", " + country});
+    }
     return (
         <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
 
             <View style={styles.container}>
                 <Text style={styles.header}>{name}</Text>
                 <Formik
-                    initialValues={{ name: name, address: address, phone: phone, desc: desc, tags: tags, rating: rating }}
+                    initialValues={{ name: name, address: address, city: city, country: country, phone: phone, desc: desc, tags: tags, rating: rating }}
+                    validationSchema={reviewSchema}
                     onSubmit={(values) => {
                         values.key = key;
                         updateData(values).then(
@@ -78,7 +89,8 @@ export default function EditRestaurant({ route, navigation }) {
                         // actions.resetForm();
                         // navigation.navigate('Home', {updatedName:values.name});
 
-                    }}
+                    }
+                    }
                 >
                     {(props) => (
                         <View>
@@ -153,12 +165,17 @@ export default function EditRestaurant({ route, navigation }) {
                                 style={styles.btnShare}
                                 color="#1E1E24"
                             />
+                            <Button
+                                onPress={openInMaps}
+                                title="Google Maps"
+                                style={styles.btnSubmit}
+                                color="#1E1E24"
+                            />
                         </View>
                     )}
                 </Formik>
             </View>
         </ScrollView >
-
     )
 }
 const styles = StyleSheet.create({
