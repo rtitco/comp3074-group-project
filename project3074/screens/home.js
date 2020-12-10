@@ -19,11 +19,9 @@ const getData = async () => {
 export default function Home({ navigation, route }) {
   const [reviews, setReviews] = useState([]);
   const [arrayholder, setArrayholder] = useState([]);
-  // const [query, setQuery] = useState('')
 
   const searchData = (query) => {
     getData().then((e) => {
-      setReviews(e);
 
       const tagResults = e.filter(item => {
         const tagList = item.tags.split(',');
@@ -36,7 +34,6 @@ export default function Home({ navigation, route }) {
           }
         }
       })
-      // setQuery(query)
       setArrayholder(tagResults);
     });
   }
@@ -93,7 +90,6 @@ export default function Home({ navigation, route }) {
         <TextInput
           placeholder="Search by Name or Tag"
           style={styles.textView}
-          // value={query}
           onChangeText={(query) => {searchData(query)}}
         />
       </View>
