@@ -70,35 +70,49 @@ const updateData = async (input) => {
 
 export default function EditRestaurant({ route, navigation }) {
     const { name, address, city, country, phone, desc, tags, rating, key } = route.params;
+    
     const openInMaps = () => {
-        openMap({ query: address + ", " + city + ", " + country});
+        openMap({ query: address + ", " + city + ", " + country });
     }
+
     const onShare = (name, address, city, country, rating, desc) => {
-          const result = Share.share({
+        const result = Share.share({
             message:
-              "Checkout this restaurant I reviewed!!!!\n"
-              + "\n\nRestaurant Name:\n" + name
-              + "\n\nDescription:\n " + desc
-              + "\n\nLocation:\n " + address + ", " + city + ", " + country 
-              + "\n\nRating:\n " + rating + "/5"
-          });
-          if (result.action === Share.sharedAction) {
+                "Checkout this restaurant I reviewed!!!!\n"
+                + "\n\nRestaurant Name:\n" + name
+                + "\n\nDescription:\n " + desc
+                + "\n\nLocation:\n " + address + ", " + city + ", " + country
+                + "\n\nRating:\n " + rating + "/5"
+        });
+        if (result.action === Share.sharedAction) {
             if (result.activityType) {
-              // shared with activity type of result.activityType
+                // shared with activity type of result.activityType
             } else {
-              // shared
+                // shared
             }
-          } else if (result.action === Share.dismissedAction) {
+        } else if (result.action === Share.dismissedAction) {
             // dismissed
-          }
-      };
+        }
+    };
+
     return (
         <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
 
             <View style={styles.container}>
+
                 <Text style={styles.header}>{name}</Text>
+
                 <Formik
-                    initialValues={{ name: name, address: address, city: city, country: country, phone: phone, desc: desc, tags: tags, rating: rating }}
+                    initialValues={{ 
+                        name: name, 
+                        address: address, 
+                        city: city, 
+                        country: country, 
+                        phone: phone, 
+                        desc: desc, 
+                        tags: tags, 
+                        rating: rating 
+                    }}
                     validationSchema={reviewSchema}
                     onSubmit={(values) => {
                         values.key = key;
@@ -107,12 +121,7 @@ export default function EditRestaurant({ route, navigation }) {
                                 (navigation.replace('Home'))
                             }, 1000)
                         )
-                        // actions.resetForm();
-                        // navigation.navigate('Home', {updatedName:values.name});
-
-                    }
-                    }
-                >
+                    }}>
                     {(props) => (
                         <View>
                             <Text>Restaurant Name:</Text>
@@ -132,22 +141,22 @@ export default function EditRestaurant({ route, navigation }) {
                             <Text style={styles.errors}>{props.errors.address}</Text>
 
                             <Text>City:</Text>
-                                <TextInput
-                                    placeholder="Toronto"
-                                    style={styles.textView}
-                                    onChangeText={props.handleChange('city')}
-                                    value={props.values.city}
-                                />
-                                <Text style={styles.errors}>{props.errors.city}</Text>
+                            <TextInput
+                                placeholder="Toronto"
+                                style={styles.textView}
+                                onChangeText={props.handleChange('city')}
+                                value={props.values.city}
+                            />
+                            <Text style={styles.errors}>{props.errors.city}</Text>
 
-                                <Text>Country:</Text>
-                                <TextInput
-                                    placeholder="Canada"
-                                    style={styles.textView}
-                                    onChangeText={props.handleChange('country')}
-                                    value={props.values.country}
-                                />
-                                <Text style={styles.errors}>{props.errors.country}</Text>
+                            <Text>Country:</Text>
+                            <TextInput
+                                placeholder="Canada"
+                                style={styles.textView}
+                                onChangeText={props.handleChange('country')}
+                                value={props.values.country}
+                            />
+                            <Text style={styles.errors}>{props.errors.country}</Text>
 
                             <Text>Phone Number:</Text>
                             <TextInput
@@ -190,6 +199,7 @@ export default function EditRestaurant({ route, navigation }) {
                                 startingValue={parseInt(rating)}
                                 style={{ paddingVertical: 10 }}
                             />
+
                             <Text></Text>
                             <Button
                                 onPress={props.handleSubmit}
@@ -197,22 +207,24 @@ export default function EditRestaurant({ route, navigation }) {
                                 style={styles.btnSubmit}
                                 color="#1E1E24"
                             />
+
                             <Text></Text>
                             <Button
-                                onPress={() => onShare(props.values.name, 
-                                    props.values.address, 
+                                onPress={() => onShare(props.values.name,
+                                    props.values.address,
                                     props.values.city,
                                     props.values.country,
-                                    props.values.rating, 
+                                    props.values.rating,
                                     props.values.desc)}
                                 title="Share"
                                 style={styles.btnSubmit}
                                 color="#1E1E24"
                             />
+                            
                             <Text></Text>
                             <Button
                                 onPress={openInMaps}
-                                title="Google Maps"
+                                title="Open in Google Maps"
                                 style={styles.btnSubmit}
                                 color="#1E1E24"
                             />

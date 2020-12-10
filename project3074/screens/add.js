@@ -26,7 +26,7 @@ const reviewSchema = yup.object({
         .min(4),
     phone: yup.string()
         .required('Phone Number is required')
-        .matches(phoneregex, 'Phone Number is not valid'),
+        .matches(phoneregex, 'Phone Number must contain only a string of 10 digits e.g. 4161112222'),
     desc: yup.string()
         .required('Please enter a short restaurant description')
         .min(3)
@@ -48,6 +48,7 @@ const storeData = async (input) => {
     let found = false;
     let myRestaurants;
     let myId = getRandomInt();
+
     getData().then(async (e) => {
         if (e != null) {
             myRestaurants = e;
@@ -85,17 +86,6 @@ const getData = async () => {
     }
 }
 
-// const clearAll = async () => {
-//     try {
-//         myId = 0;
-//         await AsyncStorage.clear()
-//     } catch (e) {
-//         // clear error
-//     }
-
-//     console.log('Done.')
-// }
-
 export default function AddRestaurant({ navigation }) {
     return (
         <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
@@ -103,7 +93,16 @@ export default function AddRestaurant({ navigation }) {
             <View style={styles.container}>
                 <Text style={styles.header}>Add Restaurant</Text>
                 <Formik
-                    initialValues={{ name: '', address: '', city: '', country: '', phone: '', desc: '', tags: '', rating: '' }}
+                    initialValues={{ 
+                        name: '', 
+                        address: '', 
+                        city: '', 
+                        country: '', 
+                        phone: '', 
+                        desc: '', 
+                        tags: '', 
+                        rating: '' 
+                    }}
                     validationSchema={reviewSchema}
                     onSubmit={(values, actions) => {
                         storeData(values).then(() => {
@@ -114,7 +113,6 @@ export default function AddRestaurant({ navigation }) {
                             .finally(() => {
                                 actions.resetForm();
                             });
-                        // clearAll();
                     }}
                 >
                     {(props) => (
@@ -193,6 +191,7 @@ export default function AddRestaurant({ navigation }) {
                                     value={props.values.rating.toString()}
                                 />
                                 <Text style={styles.errors}>{props.errors.rating}</Text>
+
                                 <Text></Text>
                                 <Button
                                     onPress={props.handleSubmit}
