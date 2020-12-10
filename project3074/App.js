@@ -26,7 +26,7 @@ function MyTabs() {
       activeTintColor: '#fff',
       inactiveTintColor: '#f0f0f0',
       activeBackgroundColor: '#CC3232',
-      inactiveBackgroundColor: '#E54B4B',
+      inactiveBackgroundColor: '#444140',
       showLabel: false,
           style: {
                 backgroundColor: '#E54B4B',

@@ -120,7 +120,7 @@ export default function AddRestaurant({ navigation }) {
                     {(props) => (
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                             <View>
-                                <Text>Restaurant Name:</Text>
+                                <Text style={styles.inputLabel}>Restaurant Name:</Text>
                                 <TextInput
                                     placeholder="Enter restaurant name"
                                     style={styles.textView}
@@ -129,7 +129,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.name}</Text>
 
-                                <Text>Address:</Text>
+                                <Text style={styles.inputLabel}>Address:</Text>
                                 <TextInput
                                     placeholder="Address"
                                     style={styles.textView}
@@ -138,7 +138,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.address}</Text>
 
-                                <Text>City:</Text>
+                                <Text style={styles.inputLabel}>City:</Text>
                                 <TextInput
                                     placeholder="Toronto"
                                     style={styles.textView}
@@ -147,7 +147,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.city}</Text>
 
-                                <Text>Country:</Text>
+                                <Text style={styles.inputLabel}>Country:</Text>
                                 <TextInput
                                     placeholder="Canada"
                                     style={styles.textView}
@@ -156,7 +156,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.country}</Text>
 
-                                <Text>Phone Number:</Text>
+                                <Text style={styles.inputLabel}>Phone Number:</Text>
                                 <TextInput
                                     placeholder="000-000-0000"
                                     keyboardType="phone-pad"
@@ -166,7 +166,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.phone}</Text>
 
-                                <Text>Description:</Text>
+                                <Text style={styles.inputLabel}>Description:</Text>
                                 <TextInput
                                     multiline={true}
                                     numberOfLines={5}
@@ -177,7 +177,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.desc}</Text>
 
-                                <Text>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
+                                <Text style={styles.inputLabel}>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
                                 <TextInput
                                     multiline={true}
                                     numberOfLines={2}
@@ -188,7 +188,7 @@ export default function AddRestaurant({ navigation }) {
                                 />
                                 <Text style={styles.errors}>{props.errors.tags}</Text>
 
-                                <Text>Rating:</Text>
+                                <Text style={styles.inputLabel}>Rating:</Text>
                                 <TextInput
                                     multiline
                                     placeholder="Rating (1-5)"
@@ -221,11 +221,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
     },
+    inputLabel: {
+        fontWeight: 'bold'
+    },
     textView: {
         width: 250,
         height: 40,
         borderColor: 'gray',
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: 'white'
+
     },
     textBox: {
         width: 250,
@@ -233,7 +238,8 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         textAlignVertical: 'top',
-        padding: 5
+        padding: 5,
+        backgroundColor: 'white'
     },
     tagBox: {
         width: 250,
@@ -241,7 +247,8 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         textAlignVertical: 'top',
-        padding: 5
+        padding: 5,
+        backgroundColor: 'white'
     },
     btnSubmit: {
         marginTop: 50
@@ -250,8 +257,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
-        marginTop: 50,
+        backgroundColor: '#eaeaea',
         paddingVertical: 30,
     },
     errors: {

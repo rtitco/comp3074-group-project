@@ -106,20 +106,25 @@ export default function Home({ navigation, route }) {
                 <Card >
                   <View style={styles.cardLines}>
                     <Text style={styles.header} >{item.name}</Text>
+
+                  </View>
+
+                  <View style={styles.cardLines}>
+                    <Text>
+                      + {formatPhoneNumber(item.phone)}
+                    </Text>
                     <Rating
                       readonly
                       type='custom'
                       imageSize={20}
-                      ratingColor="#E54B4B"
+                      ratingColor="#ffa987"
                       startingValue={parseInt(item.rating)}
                     />
+
                   </View>
 
                   <View style={styles.cardLines}>
                     <Text>{item.address}</Text>
-                    <Text>
-                      + {formatPhoneNumber(item.phone)}
-                    </Text>
                   </View>
 
                   <View style={styles.cardLines}>
@@ -154,7 +159,7 @@ export default function Home({ navigation, route }) {
 
 const styles = StyleSheet.create({
   header: {
-    color: "#E54B4B",
+    color: "#444140",
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -173,12 +178,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    marginBottom: '10%',
   },
   searchBar: {
     flexDirection: 'row',
     margin: '2%',
-    borderColor: '#E54B4B',
-    borderWidth: 3,
+    borderColor: '#adacb5',
+    borderWidth: 1,
     borderRadius: 5,
     backgroundColor: 'white'
   },
