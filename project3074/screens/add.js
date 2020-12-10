@@ -95,15 +95,15 @@ export default function AddRestaurant({ navigation }) {
             <View style={styles.container}>
                 <Text style={styles.header}>Add Restaurant</Text>
                 <Formik
-                    initialValues={{ 
-                        name: '', 
-                        address: '', 
-                        city: '', 
-                        country: '', 
-                        phone: '', 
-                        desc: '', 
-                        tags: '', 
-                        rating: '' 
+                    initialValues={{
+                        name: '',
+                        address: '',
+                        city: '',
+                        country: '',
+                        phone: '',
+                        desc: '',
+                        tags: '',
+                        rating: ''
                     }}
                     validationSchema={reviewSchema}
                     onSubmit={(values, actions) => {
@@ -168,8 +168,10 @@ export default function AddRestaurant({ navigation }) {
 
                                 <Text>Description:</Text>
                                 <TextInput
+                                    multiline={true}
+                                    numberOfLines={5}
+                                    style={styles.textBox}
                                     placeholder="Description"
-                                    style={styles.textView}
                                     onChangeText={props.handleChange('desc')}
                                     value={props.values.desc}
                                 />
@@ -177,8 +179,10 @@ export default function AddRestaurant({ navigation }) {
 
                                 <Text>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
                                 <TextInput
+                                    multiline={true}
+                                    numberOfLines={2}
+                                    style={styles.tagBox}
                                     placeholder="Separate tags by commas ' , ' "
-                                    style={styles.textView}
                                     onChangeText={props.handleChange('tags')}
                                     value={props.values.tags}
                                 />
@@ -186,6 +190,7 @@ export default function AddRestaurant({ navigation }) {
 
                                 <Text>Rating:</Text>
                                 <TextInput
+                                    multiline
                                     placeholder="Rating (1-5)"
                                     keyboardType="numeric"
                                     style={styles.textView}
@@ -222,6 +227,22 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1
     },
+    textBox: {
+        width: 250,
+        height: 100,
+        borderColor: 'gray',
+        borderWidth: 1,
+        textAlignVertical: 'top',
+        padding: 5
+    },
+    tagBox: {
+        width: 250,
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 1,
+        textAlignVertical: 'top',
+        padding: 5
+    },
     btnSubmit: {
         marginTop: 50
     },
@@ -239,6 +260,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     subhead: {
-        fontSize:12
+        fontSize: 12
     }
 });

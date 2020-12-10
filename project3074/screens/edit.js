@@ -72,7 +72,7 @@ const updateData = async (input) => {
 
 export default function EditRestaurant({ route, navigation }) {
     const { name, address, city, country, phone, desc, tags, rating, key } = route.params;
-    
+
     const openInMaps = () => {
         openMap({ query: name + ", " + address + ", " + city + ", " + country });
     }
@@ -105,15 +105,15 @@ export default function EditRestaurant({ route, navigation }) {
                 <Text style={styles.header}>{name}</Text>
 
                 <Formik
-                    initialValues={{ 
-                        name: name, 
-                        address: address, 
-                        city: city, 
-                        country: country, 
-                        phone: phone, 
-                        desc: desc, 
-                        tags: tags, 
-                        rating: rating 
+                    initialValues={{
+                        name: name,
+                        address: address,
+                        city: city,
+                        country: country,
+                        phone: phone,
+                        desc: desc,
+                        tags: tags,
+                        rating: rating
                     }}
                     validationSchema={reviewSchema}
                     onSubmit={(values) => {
@@ -171,7 +171,9 @@ export default function EditRestaurant({ route, navigation }) {
 
                             <Text>Description:</Text>
                             <TextInput
-                                style={styles.textView}
+                                multiline={true}
+                                numberOfLines={5}
+                                style={styles.textBox}
                                 onChangeText={props.handleChange('desc')}
                                 value={props.values.desc}
                             />
@@ -179,7 +181,9 @@ export default function EditRestaurant({ route, navigation }) {
 
                             <Text>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
                             <TextInput
-                                style={styles.textView}
+                                multiline={true}
+                                numberOfLines={2}
+                                style={styles.tagBox}
                                 onChangeText={props.handleChange('tags')}
                                 value={props.values.tags}
                             />
@@ -222,7 +226,7 @@ export default function EditRestaurant({ route, navigation }) {
                                 style={styles.btnSubmit}
                                 color="#1E1E24"
                             />
-                            
+
                             <Text></Text>
                             <Button
                                 onPress={openInMaps}
@@ -249,6 +253,22 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1
     },
+    textBox: {
+        width: 250,
+        height: 100,
+        borderColor: 'gray',
+        borderWidth: 1,
+        textAlignVertical: 'top',
+        padding:5
+    },
+    tagBox: {
+        width: 250,
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 1,
+        textAlignVertical: 'top',
+        padding:5
+    },
     btnSubmit: {
         marginTop: 50
     },
@@ -266,6 +286,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     subhead: {
-        fontSize:12
+        fontSize: 12
     }
 });
