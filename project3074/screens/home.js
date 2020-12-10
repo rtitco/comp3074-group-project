@@ -28,9 +28,9 @@ export default function Home({ navigation, route }) {
         const nameData = item.name.toLowerCase();
         const lowCaseQuery = query.toLowerCase();
         for (let i = 0; i < tagList.length; i++) {
-          tagList[i].toLowerCase();
-          if (tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1) {
-            return tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1
+          let tempTag = tagList[i].toLowerCase();
+          if (tempTag.indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1) {
+            return tempTag.indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1
           }
         }
       })
