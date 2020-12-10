@@ -24,6 +24,13 @@ const HomeScreenNavigator = () => {
             <Stack.Screen
                 name="Edit Restaurant Review"
                 component={EditRestaurant}
+                options={{
+                    title: 'Restaurant List',
+                    headerStyle: {
+                      backgroundColor: '#E54B4B',
+                    },
+                    headerTintColor: '#fff',
+                }}
             />
         </Stack.Navigator>
     )
