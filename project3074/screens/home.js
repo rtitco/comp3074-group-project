@@ -172,13 +172,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: "#f7ebe8"
+    //backgroundColor: "#FFA987"
   },
   searchBar: {
     flexDirection: 'row',
     margin: '2%',
-    borderColor: 'black',
-    borderWidth: 1,
+    borderColor: '#E54B4B',
+    borderWidth: 3,
     borderRadius: 5,
     backgroundColor: 'white'
   },
@@ -197,12 +197,11 @@ const styles = StyleSheet.create({
   },
   cardRight: {
     flexGrow: 1,
-    margin: '1%',
-    width: '10%'
+    width: '10%',
+    marginVertical:'1%'
   },
 
   cardDelete: {
-    borderRadius: 8,
     backgroundColor: '#E54B4B',
     flex: 1,
     justifyContent: 'center',

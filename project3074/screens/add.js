@@ -88,7 +88,7 @@ const getData = async () => {
 
 export default function AddRestaurant({ navigation }) {
     return (
-        <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
+        <ScrollView>
 
             <View style={styles.container}>
                 <Text style={styles.header}>Add Restaurant</Text>
