@@ -8,7 +8,8 @@ import * as yup from 'yup';
 import openMap from 'react-native-open-maps';
 
 const phoneregex = /^[0-9]{10}$/
-const addressregex = /^(\d+) ?([A-Za-z](?= ))? (.*?)?$/
+const addressregex = /^(\d+) ?([A-Z a-z](?= ))? (.*?)?$/
+const tagregex = /^([A-Z a-z]{3,}[\,]?)*$/ //alphabet, spaces, and commas
 
 const reviewSchema = yup.object({
     name: yup.string()
@@ -32,7 +33,9 @@ const reviewSchema = yup.object({
         .min(3)
         .max(160, 'Maximum 80 characters'),
     tags: yup.string()
-        .required('Must enter at least 1 tag'),
+        .required('Must enter at least 1 tag')
+        .matches(tagregex, 'Must be a list separated by commas\',\''),
+
     rating: yup.number()
         .required('Please enter a rating between 1-5')
         .positive('Rating must be between 1-5')
@@ -62,7 +65,6 @@ const updateData = async (input) => {
                 console.log("update complete")
             }
         }
-        // console.log("update failed")
     })
 }
 
@@ -72,7 +74,7 @@ export default function EditRestaurant({ route, navigation }) {
     const { name, address, city, country, phone, desc, tags, rating, key } = route.params;
     
     const openInMaps = () => {
-        openMap({ query: address + ", " + city + ", " + country });
+        openMap({ query: name + ", " + address + ", " + city + ", " + country });
     }
 
     const onShare = (name, address, city, country, rating, desc) => {
@@ -175,7 +177,7 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.desc}</Text>
 
-                            <Text>Tags:</Text>
+                            <Text>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
                             <TextInput
                                 style={styles.textView}
                                 onChangeText={props.handleChange('tags')}
@@ -257,5 +259,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginTop: 40,
         paddingVertical: 20,
+    },
+    errors: {
+        color: 'red',
+        fontSize: 10,
+        paddingBottom: 10
+    },
+    subhead: {
+        fontSize:12
     }
 });

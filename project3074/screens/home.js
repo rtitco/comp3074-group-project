@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView, TextInput, Button } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard } from 'react-native';
 import { useRoute, useIsFocused, useFocusEffect } from '@react-navigation/native';
 import AddForm from './add.js'
 import Card from '../shared/card';
@@ -27,10 +27,10 @@ export default function Home({ navigation, route }) {
         const tagList = item.tags.split(',');
         const nameData = item.name.toLowerCase();
         const lowCaseQuery = query.toLowerCase();
-        for(let i=0; i < tagList.length; i++){
-           tagList[i].toLowerCase();
-          if (tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1 ){
-            return tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1 
+        for (let i = 0; i < tagList.length; i++) {
+          tagList[i].toLowerCase();
+          if (tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1) {
+            return tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1
           }
         }
       })
@@ -77,77 +77,78 @@ export default function Home({ navigation, route }) {
   const formatTags = (tagString) => {
     var tagsArray = tagString.split(',')
     var textLoop = [];
-    for(let i = 0; i<tagsArray.length; i++){
-      textLoop.push({'text': tagsArray[i]})
+    for (let i = 0; i < tagsArray.length; i++) {
+      textLoop.push({ 'text': tagsArray[i] })
     }
-     return textLoop.map((item, index) => <Text style={styles.textTag} key={index}>{item.text}</Text>);
+    return textLoop.map((item, index) => <Text style={styles.textTag} key={index}>{item.text}</Text>);
   }
 
   return (
-    <View style={styles.pageContainer}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.pageContainer}>
+        <View style={styles.searchBar}>
+          <TextInput
+            placeholder="Search by Name or Tag"
+            style={styles.textView}
+            onChangeText={(query) => { searchData(query) }}
+          />
+        </View>
 
-      <View style={styles.searchBar}>
-        <TextInput
-          placeholder="Search by Name or Tag"
-          style={styles.textView}
-          onChangeText={(query) => {searchData(query)}}
+        <FlatList
+          data={arrayholder}
+          keyExtractor={({ key }, index) => key.toString()}
+          renderItem={({ item }) => (
+
+            <View style={styles.cardContainer}>
+
+              {/* Card */}
+              <TouchableOpacity style={styles.cardLeft} onPress={() => navigation.navigate('Edit Restaurant Review', item)}>
+                <Card >
+                  <View style={styles.cardLines}>
+                    <Text style={styles.header} >{item.name}</Text>
+                    <Rating
+                      readonly
+                      type='custom'
+                      imageSize={20}
+                      ratingColor="#E54B4B"
+                      startingValue={parseInt(item.rating)}
+                    />
+                  </View>
+
+                  <View style={styles.cardLines}>
+                    <Text>{item.address}</Text>
+                    <Text>
+                      + {formatPhoneNumber(item.phone)}
+                    </Text>
+                  </View>
+
+                  <View style={styles.cardLines}>
+                    <Text>{item.city}, {item.country}</Text>
+                  </View>
+
+                  <View style={styles.cardLines}>
+                    <Text style={styles.textDescription}>"{item.desc}"</Text>
+                  </View>
+
+                  <View style={styles.cardLines}>
+                    {formatTags(item.tags)}
+                  </View>
+
+                </Card>
+              </TouchableOpacity>
+
+              {/* Delete */}
+              <TouchableOpacity style={styles.cardRight} onPress={() => deleteItem(item)}>
+                <View style={styles.cardDelete}>
+                  <Icon name="trash" size={20} color="white" />
+                </View>
+              </TouchableOpacity>
+
+            </View>
+          )}
         />
       </View>
-
-      <FlatList
-        data={arrayholder}
-        keyExtractor={({ key }, index) => key.toString()}
-        renderItem={({ item }) => (
-
-          <View style={styles.cardContainer}>
-
-            {/* Card */}
-            <TouchableOpacity style={styles.cardLeft} onPress={() => navigation.navigate('Edit Restaurant Review', item)}>
-              <Card >
-                <View style={styles.cardLines}>
-                  <Text style={styles.header} >{item.name}</Text>
-                  <Rating
-                    readonly
-                    type='custom'
-                    imageSize={20}
-                    ratingColor="#E54B4B"
-                    startingValue={parseInt(item.rating)}
-                  />
-                </View>
-
-                <View style={styles.cardLines}>
-                  <Text>{item.address}</Text>
-                  <Text>
-                    + {formatPhoneNumber(item.phone)}
-                  </Text>
-                </View>
-
-                <View style={styles.cardLines}>
-                  <Text>{item.city}, {item.country}</Text>
-                </View>
-
-                <View style={styles.cardLines}>
-                  <Text style={styles.textDescription}>"{item.desc}"</Text>
-                </View>
-
-                <View style={styles.cardLines}>
-                  {formatTags(item.tags)}
-                </View>
-
-              </Card>
-            </TouchableOpacity>
-
-            {/* Delete */}
-            <TouchableOpacity style={styles.cardRight} onPress={() => deleteItem(item)}>
-              <View style={styles.cardDelete}>
-                <Icon name="trash" size={20} color="white" />
-              </View>
-            </TouchableOpacity>
-
-          </View>
-        )}
-      />
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E54B4B",
     color: "white",
     paddingHorizontal: 8,
-    marginTop:5,
+    marginTop: 5,
     borderColor: "#E54B4B",
     borderRadius: 10
   },
@@ -172,7 +173,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    //backgroundColor: "#FFA987"
   },
   searchBar: {
     flexDirection: 'row',
@@ -193,12 +193,12 @@ const styles = StyleSheet.create({
   cardLeft: {
     flexGrow: 9,
     margin: '1%',
-    width:'90%'
+    width: '90%'
   },
   cardRight: {
     flexGrow: 1,
     width: '10%',
-    marginVertical:'1%'
+    marginVertical: '1%'
   },
 
   cardDelete: {

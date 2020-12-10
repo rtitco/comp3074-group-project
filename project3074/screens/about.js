@@ -1,18 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 
 About = () => {
-
   const route = useRoute();
-  //console.log(route)
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>Joel Piovesan</Text>
+    <View style={styles.students}>
+    <Text style={styles.studentName}>Joel Piovesan</Text>
     <Text>101221909</Text>
     <Text></Text>
-    <Text>Rachel Titco</Text>
+    <Text style={styles.studentName}>Rachel Titco</Text>
     <Text>101214347</Text>
 
   </View>
@@ -20,3 +18,15 @@ About = () => {
 }
 
 export default About;
+
+const styles = StyleSheet.create({
+  students: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
+  studentName: {
+    fontWeight:'bold',
+    fontSize: 20
+  }
+});
