@@ -170,7 +170,7 @@ export default function AddRestaurant({ navigation }) {
                                 <TextInput
                                     multiline={true}
                                     numberOfLines={5}
-                                    style={styles.textBox}
+                                    style={styles.descBox}
                                     placeholder="Description"
                                     onChangeText={props.handleChange('desc')}
                                     value={props.values.desc}
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
 
     },
-    textBox: {
+    descBox: {
         width: 250,
         height: 100,
         borderColor: 'gray',
@@ -257,7 +257,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#eaeaea',
         paddingVertical: 30,
     },
     errors: {

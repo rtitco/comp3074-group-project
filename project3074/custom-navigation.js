@@ -25,7 +25,7 @@ const HomeScreenNavigator = () => {
                 name="Edit Restaurant Review"
                 component={EditRestaurant}
                 options={{
-                    title: 'Restaurant List',
+                    title: 'Edit Restaurant',
                     headerStyle: {
                       backgroundColor: '#E54B4B',
                     },

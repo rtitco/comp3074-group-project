@@ -54,9 +54,9 @@ const getData = async () => {
 
 const updateData = async (input) => {
     getData().then(async (e) => {
-        // console.log(input);
+     console.log(input);
         let myRestaurants = e;
-        // console.log(myRestaurants);
+        console.log(myRestaurants);
         for (i = 0; i < myRestaurants.length; i++) {
             if (myRestaurants[i].key === input.key) {
                 myRestaurants[i] = input;
@@ -80,7 +80,7 @@ export default function EditRestaurant({ route, navigation }) {
     const onShare = (name, address, city, country, rating, desc) => {
         const result = Share.share({
             message:
-                "Checkout this restaurant I reviewed!!!!\n"
+                "Checkout this restaurant I reviewed!\n"
                 + "\n\nRestaurant Name:\n" + name
                 + "\n\nDescription:\n " + desc
                 + "\n\nLocation:\n " + address + ", " + city + ", " + country
@@ -93,12 +93,11 @@ export default function EditRestaurant({ route, navigation }) {
                 // shared
             }
         } else if (result.action === Share.dismissedAction) {
-            // dismissed
         }
     };
 
     return (
-        <ScrollView style={{ backgroundColor: '#F7EBE8' }}>
+        <ScrollView >
 
             <View style={styles.container}>
 
@@ -126,7 +125,7 @@ export default function EditRestaurant({ route, navigation }) {
                     }}>
                     {(props) => (
                         <View>
-                            <Text>Restaurant Name:</Text>
+                            <Text style={styles.inputLabel}>Restaurant Name:</Text>
                             <TextInput
                                 style={styles.textView}
                                 onChangeText={props.handleChange('name')}
@@ -134,7 +133,7 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.name}</Text>
 
-                            <Text>Address:</Text>
+                            <Text style={styles.inputLabel}>Address:</Text>
                             <TextInput
                                 style={styles.textView}
                                 onChangeText={props.handleChange('address')}
@@ -142,7 +141,7 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.address}</Text>
 
-                            <Text>City:</Text>
+                            <Text style={styles.inputLabel}>City:</Text>
                             <TextInput
                                 placeholder="Toronto"
                                 style={styles.textView}
@@ -151,7 +150,7 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.city}</Text>
 
-                            <Text>Country:</Text>
+                            <Text style={styles.inputLabel}>Country:</Text>
                             <TextInput
                                 placeholder="Canada"
                                 style={styles.textView}
@@ -160,7 +159,7 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.country}</Text>
 
-                            <Text>Phone Number:</Text>
+                            <Text style={styles.inputLabel}>Phone Number:</Text>
                             <TextInput
                                 keyboardType="phone-pad"
                                 style={styles.textView}
@@ -169,27 +168,27 @@ export default function EditRestaurant({ route, navigation }) {
                             />
                             <Text style={styles.errors}>{props.errors.phone}</Text>
 
-                            <Text>Description:</Text>
+                            <Text style={styles.inputLabel}>Description:</Text>
                             <TextInput
                                 multiline={true}
-                                numberOfLines={5}
-                                style={styles.textBox}
+                                numberOfLines={1}
+                                style={styles.descBox}
                                 onChangeText={props.handleChange('desc')}
                                 value={props.values.desc}
                             />
                             <Text style={styles.errors}>{props.errors.desc}</Text>
 
-                            <Text>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
+                            <Text style={styles.inputLabel}>Tags: <Text style={styles.subhead}>(min. 3 characters)</Text></Text>
                             <TextInput
                                 multiline={true}
-                                numberOfLines={2}
+                                numberOfLines={1}
                                 style={styles.tagBox}
                                 onChangeText={props.handleChange('tags')}
                                 value={props.values.tags}
                             />
                             <Text style={styles.errors}>{props.errors.tags}</Text>
 
-                            <Text>Rating:</Text>
+                            <Text style={styles.inputLabel}>Rating:</Text>
                             <TextInput
                                 style={styles.textView}
                                 onChangeText={props.handleChange('rating')}
@@ -201,7 +200,7 @@ export default function EditRestaurant({ route, navigation }) {
                                 showRating
                                 readonly
                                 type='custom'
-                                ratingColor="#E54B4B"
+                                ratingColor="#FF8A5C"
                                 startingValue={parseInt(rating)}
                                 style={{ paddingVertical: 10 }}
                             />
@@ -211,7 +210,7 @@ export default function EditRestaurant({ route, navigation }) {
                                 onPress={props.handleSubmit}
                                 title="Update Restaurant"
                                 style={styles.btnSubmit}
-                                color="#1E1E24"
+                                color="#444140"
                             />
 
                             <Text></Text>
@@ -224,7 +223,7 @@ export default function EditRestaurant({ route, navigation }) {
                                     props.values.desc)}
                                 title="Share"
                                 style={styles.btnSubmit}
-                                color="#1E1E24"
+                                color="#444140"
                             />
 
                             <Text></Text>
@@ -232,7 +231,7 @@ export default function EditRestaurant({ route, navigation }) {
                                 onPress={openInMaps}
                                 title="Open in Google Maps"
                                 style={styles.btnSubmit}
-                                color="#1E1E24"
+                                color="#444140"
                             />
                         </View>
                     )}
@@ -247,18 +246,23 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
     },
+    inputLabel: {
+        fontWeight: 'bold'
+    },
     textView: {
         width: 250,
         height: 40,
         borderColor: 'gray',
+        backgroundColor: 'white',
         borderWidth: 1
     },
-    textBox: {
+    descBox: {
         width: 250,
         height: 100,
         borderColor: 'gray',
         borderWidth: 1,
         textAlignVertical: 'top',
+        backgroundColor: 'white',
         padding:5
     },
     tagBox: {
@@ -267,7 +271,8 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         textAlignVertical: 'top',
-        padding:5
+        padding:5,
+        backgroundColor: 'white',
     },
     btnSubmit: {
         marginTop: 50
@@ -276,8 +281,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
-        marginTop: 40,
         paddingVertical: 20,
     },
     errors: {
