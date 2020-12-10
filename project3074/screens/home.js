@@ -19,7 +19,7 @@ const getData = async () => {
 export default function Home({ navigation, route }) {
   const [reviews, setReviews] = useState([]);
   const [arrayholder, setArrayholder] = useState([]);
-  const [query, setQuery] = useState('')
+  // const [query, setQuery] = useState('')
 
   const searchData = (query) => {
     getData().then((e) => {
@@ -28,15 +28,15 @@ export default function Home({ navigation, route }) {
       const tagResults = e.filter(item => {
         const tagList = item.tags.split(',');
         const nameData = item.name.toLowerCase();
-        const tagQuery = query.toLowerCase();
+        const lowCaseQuery = query.toLowerCase();
         for(let i=0; i < tagList.length; i++){
            tagList[i].toLowerCase();
-          if (tagList[i].indexOf(tagQuery) > -1 || nameData.indexOf(tagQuery) > -1 ){
-            return tagList[i].indexOf(tagQuery) > -1 || nameData.indexOf(tagQuery) > -1 
+          if (tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1 ){
+            return tagList[i].indexOf(lowCaseQuery) > -1 || nameData.indexOf(lowCaseQuery) > -1 
           }
         }
       })
-      setQuery(query)
+      // setQuery(query)
       setArrayholder(tagResults);
     });
   }
@@ -59,7 +59,6 @@ export default function Home({ navigation, route }) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       searchData("");
-      console.log("we got here");
     });
 
     return unsubscribe;
@@ -84,11 +83,8 @@ export default function Home({ navigation, route }) {
     for(let i = 0; i<tagsArray.length; i++){
       textLoop.push({'text': tagsArray[i]})
     }
-    //return <Text style={styles.textTag}>textLoop</Text>;
      return textLoop.map((item, index) => <Text style={styles.textTag} key={index}>{item.text}</Text>);
   }
-
-
 
   return (
     <View style={styles.pageContainer}>
@@ -97,8 +93,8 @@ export default function Home({ navigation, route }) {
         <TextInput
           placeholder="Search by Name or Tag"
           style={styles.textView}
-          onChangeText={(query) => searchData(query)}
-          value={query}
+          // value={query}
+          onChangeText={(query) => {searchData(query)}}
         />
       </View>
 
